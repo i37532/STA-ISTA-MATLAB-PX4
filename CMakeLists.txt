@@ -1,0 +1,20 @@
+cmake_minimum_required(VERSION 3.10)
+project(velocity_sta_ista_core LANGUAGES CXX)
+
+add_library(velocity_sta_ista INTERFACE)
+target_include_directories(velocity_sta_ista INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/cpp")
+target_compile_features(velocity_sta_ista INTERFACE cxx_std_11)
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(test_velocity_core tests/cpp/test_velocity_core.cpp)
+    target_link_libraries(test_velocity_core PRIVATE velocity_sta_ista)
+    if(MSVC)
+        target_compile_options(test_velocity_core PRIVATE /W4)
+    else()
+        target_compile_options(test_velocity_core PRIVATE -Wall -Wextra -Wpedantic)
+    endif()
+    add_test(NAME velocity_core_unit COMMAND test_velocity_core)
+    add_test(NAME velocity_core_matlab_oracle COMMAND test_velocity_core
+        --oracle "${CMAKE_CURRENT_SOURCE_DIR}/tests/matlab/controller_reference.csv")
+endif()

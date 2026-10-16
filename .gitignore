@@ -1,0 +1,13 @@
+/build/
+/build-*/
+/_build*/
+*.exe
+*.obj
+*.o
+*.pdb
+*.slxc
+slprj/
+*.log
+*.asv
+*.slx.autosave
+.DS_Store
